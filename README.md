@@ -87,16 +87,16 @@ Try to wrap long statements and function chaining.
 
 ```javascript
 /* avoid */
-res = new HttpResponse(new FileStream(filePath),new HttpResponseHeader(someRawObjList.map().filter().reduce()));
+res = new HttpResponse(new FileStream(filePath),new HttpResponseHeader(someRawObjList.aaa().bbb().ccc()));
 
 /* prefer */
 res = new HttpResponse(
   new FileStream(filePath),
   new HttpResponseHeader(
     someRawObjList
-    .map()
-    .filter()
-    .reduce()
+    .aaa()
+    .bbb()
+    .ccc()
   )
 );
 ```
@@ -391,8 +391,12 @@ for (let i = 0; i < table.rows.length; i++) {
 
 /* prefer */
 const selectedRowIds = table.rows
-  .filter(row => row.selected)
-  .map(row => row.id);
+  .reduce((ids, row) => {
+    if (row.selected) {
+      ids.push(row.id);
+    }
+    return ids;
+  }, []);
 ```
 
 ## 5.4 DRY
